@@ -18,7 +18,7 @@ interface Tarea {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  viewDate: Date = new Date(); // Fecha actual
+    viewDate: Date = new Date(); // Fecha actual
   tareasCalendario: CalendarEvent[] = []; // Eventos del calendario
 
   constructor() { }
@@ -29,15 +29,24 @@ export class HomePage implements OnInit {
 
   cargarTareas() {
     const tareas = JSON.parse(localStorage.getItem("tareas") || "[]") as Tarea[];
+    console.log('Tareas cargadas:', tareas);  // Verifica que las tareas se cargan correctamente
 
-    // Convertir cada tarea en un evento del calendario
-    this.tareasCalendario = tareas.map(tarea => ({
-      start: new Date(tarea.fechaVencimiento),
-      title: tarea.titulo,
-      color: { primary: '#1e90ff', secondary: '#D1E8FF' }, // Colores personalizables
-      meta: tarea // Adjunta toda la tarea al evento
-    }));
+    this.tareasCalendario = tareas.map(tarea => {
+      const fecha = new Date(tarea.fechaVencimiento);
+      console.log('Fecha de tarea:', fecha);  // Verifica si la fecha es válida
+
+      return {
+        start: fecha,
+        title: tarea.titulo,
+        color: { primary: '#1e90ff', secondary: '#D1E8FF' }, // Colores personalizables
+        meta: tarea // Adjunta toda la tarea al evento
+      };
+    });
+
+    console.log('Eventos del calendario:', this.tareasCalendario);  // Verifica que los eventos están siendo generados
   }
+
+
 
   onEventClicked(evento: any) {
     const calendarEvent = evento as { event: CalendarEvent };

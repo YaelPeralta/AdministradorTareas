@@ -50,7 +50,6 @@ export class AddTareasPage {
 
       // Limpiar el formulario después de agregar la tarea
       this.limpiarFormulario();
-      this.router.navigate(['/lista-tareas']);
     }
   }
 
