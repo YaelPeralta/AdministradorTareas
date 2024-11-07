@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 interface Tarea {
   titulo: string;
@@ -25,7 +24,7 @@ export class AddTareasPage {
   valorFechaVencimiento = "";
   valorNotas = "";
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   Agregar() {
     if (this.valorTitulo && this.valorDescripcion && this.valorCategoria && this.valorPrioridad &&
