@@ -2,14 +2,27 @@
   <ion-toolbar>
     <ion-title>Lista de Tareas</ion-title>
     <ion-buttons slot="end">
+      <ion-button routerLink="/home">Calendario</ion-button>
       <ion-button routerLink="/add-tareas">Agregar Tarea</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<ion-searchbar [(ngModel)]="busqueda" (ionInput)="aplicarFiltro()" placeholder="Buscar tareas"></ion-searchbar>
+
+<ion-item>
+  <ion-label>Filtrar por Categoría</ion-label>
+  <ion-select [(ngModel)]="filtroCategoria" (ionChange)="aplicarFiltro()">
+    <ion-select-option value="">Todas</ion-select-option>
+    <ion-select-option value="Personal">Personal</ion-select-option>
+    <ion-select-option value="Laboral">Laboral</ion-select-option>
+    <ion-select-option value="Social">Social</ion-select-option>
+  </ion-select>
+</ion-item>
+
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let tarea of tareas; let i = index">
+    <ion-item *ngFor="let tarea of tareasFiltradas; let i = index">>
       <ion-label>
         <h2>{{ tarea.titulo }}</h2>
         <p>{{ tarea.descripcion }}</p>

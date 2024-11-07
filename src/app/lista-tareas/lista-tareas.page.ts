@@ -29,13 +29,17 @@ export class ListaTareasPage {
   valorFechaVencimiento = "";
   valorNotas = "";
 
+
+  busqueda: string = "";
+  filtroCategoria: string = "";
+  tareasFiltradas: Tarea[] = [];
+
+
   constructor() {
     this.cargarTareas();
   }
-
-  cargarTareas() {
-    const tareasLocal = localStorage.getItem("tareas");
-    this.tareas = tareasLocal ? JSON.parse(tareasLocal) : [];
+  ionViewWillEnter() {
+    this.cargarTareas();
   }
 
   eliminarTarea(index: number) {
@@ -57,6 +61,11 @@ export class ListaTareasPage {
   }
 
   guardarEdicion() {
+    if (!this.valorTitulo || !this.valorDescripcion || !this.valorCategoria || !this.valorPrioridad || !this.valorEstado) {
+      alert("Por favor, complete todos los campos obligatorios.");
+      return;
+    }
+
     if (this.editIndex !== null) {
       this.tareas[this.editIndex] = {
         titulo: this.valorTitulo,
@@ -67,11 +76,11 @@ export class ListaTareasPage {
         fechaVencimiento: this.valorFechaVencimiento,
         notas: this.valorNotas,
       };
-
       localStorage.setItem("tareas", JSON.stringify(this.tareas));
       this.cancelarEdicion();
     }
   }
+
 
   cancelarEdicion() {
     this.editIndex = null;
@@ -84,15 +93,34 @@ export class ListaTareasPage {
     this.valorNotas = "";
   }
 
-  // Nueva función para marcar como completada
   marcarComoCompletada(index: number) {
     const tarea = this.tareas[index];
     if (tarea.estado === 'Inicial') {
       tarea.estado = 'En ejecución';
-    } else if (tarea.estado === 'en Ejecución') {
+    } else if (tarea.estado === 'En ejecución') {
       tarea.estado = 'Terminada';
     }
     localStorage.setItem("tareas", JSON.stringify(this.tareas));
   }
+
+  cargarTareas() {
+    const tareasLocal = localStorage.getItem("tareas");
+    this.tareas = tareasLocal ? JSON.parse(tareasLocal) : [];
+    this.aplicarFiltro();
+  }
+
+
+  aplicarFiltro() {
+    this.tareasFiltradas = this.tareas.filter(tarea => {
+      const coincideCategoria = this.filtroCategoria ? tarea.categoria === this.filtroCategoria : true;
+      const coincideBusqueda = this.busqueda ?
+        tarea.titulo.toLowerCase().includes(this.busqueda.toLowerCase()) ||
+        tarea.descripcion.toLowerCase().includes(this.busqueda.toLowerCase()) : true;
+
+      return coincideCategoria && coincideBusqueda;
+    });
+  }
+
+
 
 }
