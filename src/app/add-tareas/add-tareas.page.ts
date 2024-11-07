@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Tarea {
   titulo: string;
@@ -24,7 +25,7 @@ export class AddTareasPage {
   valorFechaVencimiento = "";
   valorNotas = "";
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   Agregar() {
     if (this.valorTitulo && this.valorDescripcion && this.valorCategoria && this.valorPrioridad &&
@@ -49,6 +50,7 @@ export class AddTareasPage {
 
       // Limpiar el formulario después de agregar la tarea
       this.limpiarFormulario();
+      this.router.navigate(['/lista-tareas']);
     }
   }
 
