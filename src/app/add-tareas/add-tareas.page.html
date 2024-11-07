@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Tarea</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="Agregar()">
+    <ion-item>
+      <ion-label position="stacked">Título</ion-label>
+      <ion-input [(ngModel)]="valorTitulo" name="titulo" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-textarea [(ngModel)]="valorDescripcion" name="descripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categoría</ion-label>
+      <ion-select [(ngModel)]="valorCategoria" name="categoria" placeholder="Seleccionar">
+        <ion-select-option value="Personal">Personal</ion-select-option>
+        <ion-select-option value="Laboral">Laboral</ion-select-option>
+        <ion-select-option value="Social">Social</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Prioridad</ion-label>
+      <ion-select [(ngModel)]="valorPrioridad" name="prioridad" placeholder="Seleccionar">
+        <ion-select-option value="Baja">Baja</ion-select-option>
+        <ion-select-option value="Media">Media</ion-select-option>
+        <ion-select-option value="Alta">Alta</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="valorEstado" name="estado" placeholder="Seleccionar">
+        <ion-select-option value="Inicial">Inicial</ion-select-option>
+        <ion-select-option value="En ejecución">En Ejecución</ion-select-option>
+        <ion-select-option value="Terminada">Finalizada</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Fecha de Vencimiento</ion-label>
+      <ion-datetime [(ngModel)]="valorFechaVencimiento" name="fechaVencimiento" presentation="date-time"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Notas</ion-label>
+      <ion-textarea [(ngModel)]="valorNotas" name="notas"></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" routerLink="/lista-tareas">Agregar Tarea</ion-button>
+    <ion-button expand="block" routerLink="/lista-tareas">Cancelar</ion-button>
+  </form>
+</ion-content>

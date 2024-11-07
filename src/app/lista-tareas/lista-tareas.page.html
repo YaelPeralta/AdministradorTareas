@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de Tareas</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/add-tareas">Agregar Tarea</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let tarea of tareas; let i = index">
+      <ion-label>
+        <h2>{{ tarea.titulo }}</h2>
+        <p>{{ tarea.descripcion }}</p>
+        <p>Categoría: {{ tarea.categoria }} | Prioridad: {{ tarea.prioridad }}</p>
+        <p>Estado: {{ tarea.estado }} | Fecha de Vencimiento: {{ tarea.fechaVencimiento }}</p>
+        <p>Notas: {{ tarea.notas }}</p>
+      </ion-label>
+      <ion-button fill="clear" color="primary" (click)="editarTarea(tarea, i)">Editar</ion-button>
+      <ion-button fill="clear" color="danger" (click)="eliminarTarea(i)">Eliminar</ion-button>
+      <ion-button fill="clear" color="success" (click)="marcarComoCompletada(i)">Completada</ion-button>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- Formulario de edición de tarea -->
+  <div *ngIf="editIndex !== null">
+    <ion-item>
+      <ion-label position="stacked">Título</ion-label>
+      <ion-input [(ngModel)]="valorTitulo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-textarea [(ngModel)]="valorDescripcion"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categoría</ion-label>
+      <ion-select [(ngModel)]="valorCategoria" placeholder="Seleccionar">
+        <ion-select-option value="personal">Personal</ion-select-option>
+        <ion-select-option value="laboral">Laboral</ion-select-option>
+        <ion-select-option value="social">Social</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Prioridad</ion-label>
+      <ion-select [(ngModel)]="valorPrioridad" placeholder="Seleccionar">
+        <ion-select-option value="baja">Baja</ion-select-option>
+        <ion-select-option value="media">Media</ion-select-option>
+        <ion-select-option value="alta">Alta</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Estado</ion-label>
+      <ion-select [(ngModel)]="valorEstado" placeholder="Seleccionar">
+        <ion-select-option value="Inicial">Inicial</ion-select-option>
+        <ion-select-option value="En ejecución">En Ejecución</ion-select-option>
+        <ion-select-option value="Terminada">Finalizada</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Fecha de Vencimiento</ion-label>
+      <ion-datetime [(ngModel)]="valorFechaVencimiento" presentation="date-time"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Notas</ion-label>
+      <ion-textarea [(ngModel)]="valorNotas"></ion-textarea>
+    </ion-item>
+
+    <ion-button expand="block" color="success" (click)="guardarEdicion()">Guardar Cambios</ion-button>
+    <ion-button expand="block" color="medium" (click)="cancelarEdicion()">Cancelar</ion-button>
+  </div>
+</ion-content>
